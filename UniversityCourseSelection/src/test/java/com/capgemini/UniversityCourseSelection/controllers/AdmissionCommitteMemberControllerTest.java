@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -35,6 +36,7 @@ import com.capgemini.UniversityCourseSelection.entities.Applicant;
 import com.capgemini.UniversityCourseSelection.entities.UniversityStaffMember;
 import com.capgemini.UniversityCourseSelection.exception.NotFoundException;
 import com.capgemini.UniversityCourseSelection.services.AdmissionCommitteeMemberServiceImpl;
+import com.capgemini.UniversityCourseSelection.services.ApplicantServiceImpl;
 import com.capgemini.UniversityCourseSelection.services.UniversityStaffServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -50,6 +52,9 @@ class AdmissionCommitteMemberControllerTest {
 
 	@Mock
 	private AdmissionCommitteeMemberServiceImpl committeeService;
+	
+	@Mock
+	private ApplicantServiceImpl applicantService;
 
 	@InjectMocks
 	private AdmissionCommitteMemberController committeeController;
@@ -222,7 +227,7 @@ class AdmissionCommitteMemberControllerTest {
 //		
 //		assertThatThrownBy(()-> mockMvc.perform(mockRequest)).hasRootCauseInstanceOf(NotFoundException.class);
 //
-//	}
+//	} 
 	
 	
 	@Test
@@ -233,12 +238,12 @@ class AdmissionCommitteMemberControllerTest {
 		
 		Admission admission = new Admission(1, 1, 1, LocalDate.of(2022, 3, 10));
 		Applicant applicant = new Applicant(1, "Adesh", 12312312L, "B.Tech", 91, "pass1", admission);
-		
+		Mockito.when(applicantService.viewApplicant(applicant.getApplicantId())).thenReturn(Optional.of(applicant));		
 		Mockito.when(committeeService.provideAdmissionResult(applicant, admission)).thenReturn(AdmissionStatus.CONFIRMED);
 
 		String updatedBody = objectWriter.writeValueAsString(applicant);
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/uni/committee/getResult").session(session)
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/uni/committee/getResult/1").session(session)
 				.contentType(MediaType.APPLICATION_JSON).content(updatedBody).accept(MediaType.APPLICATION_JSON);
 
 		mockMvc.perform(mockRequest).andExpect(jsonPath("$", notNullValue()))
@@ -255,11 +260,12 @@ class AdmissionCommitteMemberControllerTest {
 		Admission admission = new Admission(1, 1, 1, LocalDate.of(2022, 3, 10));
 		Applicant applicant = new Applicant(1, "Adesh", 12312312L, "B.Tech", 91, "pass1", admission);
 		
+		Mockito.when(applicantService.viewApplicant(applicant.getApplicantId())).thenReturn(Optional.of(applicant));
 		Mockito.when(committeeService.provideAdmissionResult(applicant, admission)).thenReturn(AdmissionStatus.PENDING);
 
 		String updatedBody = objectWriter.writeValueAsString(applicant);
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/uni/committee/getResult").session(session)
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/uni/committee/getResult/1").session(session)
 				.contentType(MediaType.APPLICATION_JSON).content(updatedBody).accept(MediaType.APPLICATION_JSON);
 
 		mockMvc.perform(mockRequest).andExpect(jsonPath("$", notNullValue()))
@@ -275,12 +281,12 @@ class AdmissionCommitteMemberControllerTest {
 		
 		Admission admission = new Admission(1, 1, 1, LocalDate.of(2022, 3, 10));
 		Applicant applicant = new Applicant(1, "Adesh", 12312312L, "B.Tech", 91, "pass1", admission);
-		
+		Mockito.when(applicantService.viewApplicant(applicant.getApplicantId())).thenReturn(Optional.of(applicant));
 		Mockito.when(committeeService.provideAdmissionResult(applicant, admission)).thenReturn(AdmissionStatus.REJECTED);
 
 		String updatedBody = objectWriter.writeValueAsString(applicant);
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/uni/committee/getResult").session(session)
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/uni/committee/getResult/1").session(session)
 				.contentType(MediaType.APPLICATION_JSON).content(updatedBody).accept(MediaType.APPLICATION_JSON);
 
 		mockMvc.perform(mockRequest).andExpect(jsonPath("$", notNullValue()))
