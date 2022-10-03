@@ -51,7 +51,7 @@ public class AdmissionController {
 	}
 	
 	
-	@PostMapping("/addAdmission")
+	@PostMapping("/add")
 	public ResponseEntity<Admission> addAdmission(@RequestBody Admission admission, HttpServletRequest request) {
 		boolean valid=checkSession(request,"applicant");
 		String host = String.valueOf(request.getServerPort());
@@ -73,7 +73,7 @@ public class AdmissionController {
 	}
 	
 	
-	@PutMapping("/updateAdmission")
+	@PutMapping("/update")
     public ResponseEntity<Admission> updateAdmission(@RequestBody Admission admission,HttpServletRequest request){
 		
 		if (admission == null || admission.getApplicantId() == 0) {
@@ -94,7 +94,7 @@ public class AdmissionController {
 	} 
     
 	
-	@DeleteMapping("/cancelAdmission/{admissionId}")
+	@DeleteMapping("/cancel/{admissionId}")
     public ResponseEntity<Admission> cancelAdmission(@PathVariable int admissionId,HttpServletRequest request){
 		
 		boolean valid = checkSession(request, "commitee");
@@ -111,7 +111,7 @@ public class AdmissionController {
 	} 
     
 	
-	@GetMapping("/alladmissionbyId/{courseId}")
+	@GetMapping("/allbyId/{courseId}")
     public ResponseEntity<List<Admission>> showAllAdmissionByCourseId(@PathVariable int courseId,HttpServletRequest request ){
 		
 		boolean valid = checkSession(request, "commitee");
@@ -130,7 +130,7 @@ public class AdmissionController {
 	
 
 	
-	@GetMapping("/alladmissionbyDate/{date}/{month}/{year}")
+	@GetMapping("/allbyDate/{date}/{month}/{year}")
     public ResponseEntity<List<Admission>> showAllAdmissionByDate(@PathVariable int date,@PathVariable String month,@PathVariable int year,HttpServletRequest request){
 		
 		boolean valid = checkSession(request, "commitee");
