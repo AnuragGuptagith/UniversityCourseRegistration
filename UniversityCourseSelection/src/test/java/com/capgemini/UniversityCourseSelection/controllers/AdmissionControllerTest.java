@@ -72,7 +72,7 @@ class AdmissionControllerTest {
 		Mockito.when(admission_service.addAdmission(add1)).thenReturn(add1);
 		String body = objectWriter.writeValueAsString(add1);
 		
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/admission/addAdmission").session(session)
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/admission/add").session(session)
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).content(body);
 		mockMvc.perform(mockRequest).andExpect(status().isOk());	
 	}
@@ -88,7 +88,7 @@ class AdmissionControllerTest {
 		MockHttpSession session = new MockHttpSession();
 		session.setAttribute("commitee", 6);
 				
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/admission/updateAdmission").session(session)
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/admission/update").session(session)
 				.contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).content(body);
 		
 		mockMvc.perform(mockRequest).andExpect(status().isOk());		
@@ -105,7 +105,7 @@ class AdmissionControllerTest {
 				
 		String getBody = objectWriter.writeValueAsString(add1);
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/admission/cancelAdmission/1").session(session)
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/admission/cancel/1").session(session)
 				.contentType(MediaType.APPLICATION_JSON).content(getBody).accept(MediaType.APPLICATION_JSON);
 
 		mockMvc.perform(mockRequest).andExpect(status().isOk());		
@@ -126,7 +126,7 @@ class AdmissionControllerTest {
 
 		String getBody = objectWriter.writeValueAsString(admissionlist);
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/admission/alladmissionbyId/5").session(session)
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/admission/allbyId/5").session(session)
 				.contentType(MediaType.APPLICATION_JSON).content(getBody).accept(MediaType.APPLICATION_JSON);
 
 		mockMvc.perform(mockRequest).andExpect(status().isOk());
@@ -146,7 +146,7 @@ class AdmissionControllerTest {
 		
 		String getBody = objectWriter.writeValueAsString(admissionlist);
 
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/admission/alladmissionbyDate/10/Sep/2020").session(session)
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/admission/allbyDate/10/Sep/2020").session(session)
 				.contentType(MediaType.APPLICATION_JSON).content(getBody).accept(MediaType.APPLICATION_JSON);
 
 		mockMvc.perform(mockRequest).andExpect(status().isOk());	
@@ -159,7 +159,7 @@ class AdmissionControllerTest {
 		
 		String body = objectWriter.writeValueAsString(add1);
 		
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/admission/addAdmission")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.post("/admission/add")
 				.session(session)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
@@ -176,7 +176,7 @@ class AdmissionControllerTest {
 		
 		String body = objectWriter.writeValueAsString(add1);
 		
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/admission/updateAdmission")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.put("/admission/update")
 				.session(session)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
@@ -193,7 +193,7 @@ class AdmissionControllerTest {
 		
 		String body = objectWriter.writeValueAsString(add1);
 		
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/admission/cancelAdmission/1")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.delete("/admission/cancel/1")
 				.session(session)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
@@ -213,7 +213,7 @@ class AdmissionControllerTest {
 		
 		String body = objectWriter.writeValueAsString(admissionlist);
 		
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/admission/alladmissionbyId/5")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/admission/allbyId/5")
 				.session(session)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
@@ -233,7 +233,7 @@ class AdmissionControllerTest {
 		
 		String body = objectWriter.writeValueAsString(admissionlist);
 		
-		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/admission/alladmissionbyDate/10/Sep/2020")
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.get("/admission/allbyDate/10/Sep/2020")
 				.session(session)
 				.contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_JSON)
