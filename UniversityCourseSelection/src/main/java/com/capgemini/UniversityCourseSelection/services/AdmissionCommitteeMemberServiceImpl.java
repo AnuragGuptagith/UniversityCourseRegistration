@@ -1,7 +1,6 @@
 package com.capgemini.UniversityCourseSelection.services;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -72,8 +71,7 @@ public class AdmissionCommitteeMemberServiceImpl implements IAdmissionCommiteeMe
 	@Override
 	public List<AdmissionCommiteeMember> viewAllCommitteeMembers() {
 		List<AdmissionCommiteeMember> l = repo.findAll();
-		if(l.isEmpty())
-		{
+		if (l.isEmpty()) {
 			throw new NotFoundException("No commitee members found");
 		}
 		return l;
@@ -81,18 +79,17 @@ public class AdmissionCommitteeMemberServiceImpl implements IAdmissionCommiteeMe
 
 	@Override
 	public AdmissionStatus provideAdmissionResult(Applicant app, Admission adm) {
-		
+
 		// checking if the objects actually exists in DB or not
 		Applicant applicant = null;
 		Admission admission = null;
 		Course course = null;
-				
+
 		if (courseRepo.existsById(adm.getCourseId())) {
 			course = courseRepo.findById(adm.getCourseId()).get();
 		} else {
 			throw new NotFoundException("The course id: " + adm.getCourseId() + " doesnot exists !");
 		}
-		
 
 		if (applicantRepo.existsById(app.getApplicantId()) && admissionRepo.existsById(adm.getAdmissionId())) {
 			applicant = applicantRepo.findById(app.getApplicantId()).get();
@@ -101,7 +98,6 @@ public class AdmissionCommitteeMemberServiceImpl implements IAdmissionCommiteeMe
 			throw new NotFoundException("The Admission id: " + adm.getAdmissionId() + " or Applicant id: "
 					+ app.getApplicantId() + "  doesnot exists !");
 		}
-
 
 		// criteria 1 (admission date)
 		LocalDate admissionDate = admission.getAdmissionDate();
@@ -114,7 +110,7 @@ public class AdmissionCommitteeMemberServiceImpl implements IAdmissionCommiteeMe
 			applicantRepo.save(applicant);
 			return applicant.getStatus();
 		}
-		
+
 		// criteria 1 satisfied
 
 		// criteria 2 ( percentage )
@@ -131,7 +127,7 @@ public class AdmissionCommitteeMemberServiceImpl implements IAdmissionCommiteeMe
 		}
 
 		// criteria 2 satisfied
-		
+
 		applicantRepo.save(applicant);
 		return applicant.getStatus();
 

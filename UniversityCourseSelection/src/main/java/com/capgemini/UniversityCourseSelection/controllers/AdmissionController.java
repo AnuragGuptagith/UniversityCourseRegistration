@@ -1,6 +1,5 @@
 package com.capgemini.UniversityCourseSelection.controllers;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
@@ -9,8 +8,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.capgemini.UniversityCourseSelection.entities.Admission;
+import com.capgemini.UniversityCourseSelection.exception.NotFoundException;
+import com.capgemini.UniversityCourseSelection.exception.NotLoggedInException;
+import com.capgemini.UniversityCourseSelection.services.IAdmissionService;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,13 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.capgemini.UniversityCourseSelection.entities.Admission;
-import com.capgemini.UniversityCourseSelection.exception.NotFoundException;
-import com.capgemini.UniversityCourseSelection.exception.NotLoggedInException;
-import com.capgemini.UniversityCourseSelection.services.IAdmissionService;
 
 @RestController
 @RequestMapping("/admission")

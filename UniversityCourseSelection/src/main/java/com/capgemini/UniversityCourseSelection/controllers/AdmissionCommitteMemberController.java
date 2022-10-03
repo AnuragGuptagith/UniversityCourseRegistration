@@ -23,7 +23,6 @@ import com.capgemini.UniversityCourseSelection.entities.AdmissionStatus;
 import com.capgemini.UniversityCourseSelection.entities.Applicant;
 import com.capgemini.UniversityCourseSelection.exception.NotFoundException;
 import com.capgemini.UniversityCourseSelection.exception.NotLoggedInException;
-import com.capgemini.UniversityCourseSelection.repo.IApplicantRepository;
 import com.capgemini.UniversityCourseSelection.services.IAdmissionCommiteeMemberService;
 import com.capgemini.UniversityCourseSelection.services.IApplicantService;
 

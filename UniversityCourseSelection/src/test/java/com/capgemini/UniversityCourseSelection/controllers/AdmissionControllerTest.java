@@ -1,10 +1,7 @@
 package com.capgemini.UniversityCourseSelection.controllers;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.time.LocalDate;
@@ -28,7 +25,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.capgemini.UniversityCourseSelection.entities.Admission;
-import com.capgemini.UniversityCourseSelection.entities.Applicant;
 import com.capgemini.UniversityCourseSelection.exception.NotLoggedInException;
 import com.capgemini.UniversityCourseSelection.services.AdmissionServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;

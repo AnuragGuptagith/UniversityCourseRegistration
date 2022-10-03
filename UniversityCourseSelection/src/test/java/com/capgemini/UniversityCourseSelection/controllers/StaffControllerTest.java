@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 
 import com.capgemini.UniversityCourseSelection.entities.Course;
 import com.capgemini.UniversityCourseSelection.entities.UniversityStaffMember;
@@ -203,7 +202,7 @@ class StaffControllerTest {
 	
 	@Test
 	void viewStaff_failWhenNotFound() throws Exception {
-		int id = 5;
+		
 		Mockito.when(staffService.viewStaff(5))
 		.thenThrow(new NotFoundException("Staff with id: 5 not found!"));
 		

@@ -3,7 +3,6 @@ package com.capgemini.UniversityCourseSelection.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.capgemini.UniversityCourseSelection.entities.AdmissionStatus;
 import com.capgemini.UniversityCourseSelection.entities.Applicant;
 public interface IApplicantService {
 	

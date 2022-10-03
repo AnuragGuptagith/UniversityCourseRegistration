@@ -3,7 +3,6 @@ package com.capgemini.UniversityCourseSelection.controllers;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -14,14 +13,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.context.SpringBootTest;
+
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
@@ -33,12 +31,12 @@ import com.capgemini.UniversityCourseSelection.entities.Admission;
 import com.capgemini.UniversityCourseSelection.entities.AdmissionCommiteeMember;
 import com.capgemini.UniversityCourseSelection.entities.AdmissionStatus;
 import com.capgemini.UniversityCourseSelection.entities.Applicant;
-import com.capgemini.UniversityCourseSelection.entities.UniversityStaffMember;
+
 import com.capgemini.UniversityCourseSelection.exception.NotFoundException;
 import com.capgemini.UniversityCourseSelection.services.AdmissionCommitteeMemberServiceImpl;
 import com.capgemini.UniversityCourseSelection.services.ApplicantServiceImpl;
-import com.capgemini.UniversityCourseSelection.services.UniversityStaffServiceImpl;
-import com.fasterxml.jackson.core.JsonProcessingException;
+
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
