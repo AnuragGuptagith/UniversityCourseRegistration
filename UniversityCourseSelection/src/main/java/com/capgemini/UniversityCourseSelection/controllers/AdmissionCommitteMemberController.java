@@ -23,7 +23,9 @@ import com.capgemini.UniversityCourseSelection.entities.AdmissionStatus;
 import com.capgemini.UniversityCourseSelection.entities.Applicant;
 import com.capgemini.UniversityCourseSelection.exception.NotFoundException;
 import com.capgemini.UniversityCourseSelection.exception.NotLoggedInException;
+import com.capgemini.UniversityCourseSelection.repo.IApplicantRepository;
 import com.capgemini.UniversityCourseSelection.services.IAdmissionCommiteeMemberService;
+import com.capgemini.UniversityCourseSelection.services.IApplicantService;
 
 @RestController
 @RequestMapping("/uni/committee")
@@ -31,6 +33,9 @@ public class AdmissionCommitteMemberController {
 
 	@Autowired
 	private IAdmissionCommiteeMemberService committeService;
+	
+	@Autowired
+	private IApplicantService applicantService; 
 
 	private boolean checkSession(HttpServletRequest request, String type) {
 		HttpSession session = request.getSession();
@@ -137,14 +142,35 @@ public class AdmissionCommitteMemberController {
 		return new ResponseEntity<>(l, null, HttpStatus.OK);
 	}
 
-	@PostMapping("/getResult")
-	public ResponseEntity<AdmissionStatus> getAdmissionResult(@RequestBody Applicant applicant, HttpServletRequest request) {
+//	@PostMapping("/getResult")
+//	public ResponseEntity<AdmissionStatus> getAdmissionResult(@RequestBody Applicant applicant, HttpServletRequest request) {
+//		
+//		if(!checkSession(request, "commitee")) {
+//			String port = String.valueOf(request.getServerPort());			
+//			throw new NotLoggedInException("Accessible to commitee only. If you are a registered commitee member, click http://localhost:"+port+"/login/commitee to login.");
+//		}
+//
+//		Admission admission = applicant.getAdmission();
+//
+//		AdmissionStatus status = null;
+//
+//		if (applicant == null || admission == null) {
+//			throw new NotFoundException("Applicant or Admission is Null !");
+//		}
+//		
+//		status = committeService.provideAdmissionResult(applicant, admission);
+//		return new ResponseEntity<>(status, HttpStatus.OK);
+//	}
+	
+	@GetMapping("/getResult/{id}")
+	public ResponseEntity<AdmissionStatus> getAdmissionResult(@PathVariable int id, HttpServletRequest request) {
 		
 		if(!checkSession(request, "commitee")) {
 			String port = String.valueOf(request.getServerPort());			
 			throw new NotLoggedInException("Accessible to commitee only. If you are a registered commitee member, click http://localhost:"+port+"/login/commitee to login.");
 		}
 
+		Applicant applicant = applicantService.viewApplicant(id).get();
 		Admission admission = applicant.getAdmission();
 
 		AdmissionStatus status = null;
