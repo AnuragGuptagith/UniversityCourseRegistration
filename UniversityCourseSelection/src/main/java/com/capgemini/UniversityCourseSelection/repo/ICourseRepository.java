@@ -8,5 +8,8 @@ import com.capgemini.UniversityCourseSelection.entities.Course;
 
 @Repository
 public interface ICourseRepository extends JpaRepository<Course, Integer> {
+	
+
+     
 
 }

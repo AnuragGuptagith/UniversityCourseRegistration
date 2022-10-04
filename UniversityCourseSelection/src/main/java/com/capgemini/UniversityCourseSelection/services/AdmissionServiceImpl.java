@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.capgemini.UniversityCourseSelection.entities.Admission;
+import com.capgemini.UniversityCourseSelection.entities.Course;
 import com.capgemini.UniversityCourseSelection.exception.NotFoundException;
 import com.capgemini.UniversityCourseSelection.repo.IAdmissionRepository;
 import com.capgemini.UniversityCourseSelection.repo.IApplicantRepository;
@@ -28,8 +29,15 @@ public class AdmissionServiceImpl implements IAdmissionService {
 		if(!apprepo.existsById(add.getApplicantId())) {
 			throw new NotFoundException();
 		}
+		
 		if(!courseRepo.existsById(add.getCourseId()))
 			throw new NotFoundException("Course not found");
+		else {
+			Course course=courseRepo.findById(add.getCourseId()).get();
+			if(course.getStatus().equals("INACTIVE")) {
+				throw new NotFoundException("Course is not available");
+			}
+		}
 		
 		Admission addadmission = add;
 		return admissionrepo.save(addadmission);
@@ -56,6 +64,13 @@ public class AdmissionServiceImpl implements IAdmissionService {
 		
 		if(!courseRepo.existsById(add.getCourseId()))
 			throw new NotFoundException("Course not found");
+		else {
+			Course course=courseRepo.findById(add.getCourseId()).get();
+			if(course.getStatus().equals("INACTIVE")) {
+				throw new NotFoundException("Course is not available");
+			}
+		}
+		
 		
 		if(add==null||!admissionrepo.existsById(add.getAdmissionId())) {
 			throw new NotFoundException();

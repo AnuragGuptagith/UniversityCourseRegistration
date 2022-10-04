@@ -107,7 +107,7 @@ class ApplicantControllerTest {
 
 		MockHttpSession session = new MockHttpSession();
 
-		session.setAttribute("commitee", 2);
+		session.setAttribute("applicant", 1);
 
 		Mockito.when(service.deleteApplicant(app1)).thenReturn(app1);
 
@@ -183,7 +183,7 @@ class ApplicantControllerTest {
 	void testDeleteApplicant_NotFoundException() throws Exception {
 		MockHttpSession session = new MockHttpSession();
 		Applicant app = new Applicant();
-		session.setAttribute("commitee", 1);
+		session.setAttribute("applicant", 1);
 
 		String delBody = objectWriter.writeValueAsString(app);
 
