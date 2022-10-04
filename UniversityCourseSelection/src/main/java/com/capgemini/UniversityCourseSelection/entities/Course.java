@@ -14,16 +14,13 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -63,5 +60,26 @@ public class Course {
 	
 	@Column(name = "course_Criteria")
 	private double courseCriteria;
+	
+	private String status;
+	
+	public Course() {
+		status="ACTIVE";
+	}
+
+	public Course(Integer courseId, String courseName, String courseDuration, LocalDate courseStartDate,
+			LocalDate courseEndDate, String courseFees, double courseCriteria) {
+		super();
+		this.courseId = courseId;
+		this.courseName = courseName;
+		this.courseDuration = courseDuration;
+		this.courseStartDate = courseStartDate;
+		this.courseEndDate = courseEndDate;
+		this.courseFees = courseFees;
+		this.courseCriteria = courseCriteria;
+		this.status="ACTIVE";
+	}
+	
+	
 
 }

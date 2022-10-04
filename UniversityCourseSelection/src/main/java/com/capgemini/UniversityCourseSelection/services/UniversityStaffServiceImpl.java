@@ -46,7 +46,12 @@ public class UniversityStaffServiceImpl implements IUniversityStaffService{
 	@Override
 	public void removeStaff(int id) {
 		if(staffRepo.existsById(id)) {
-			staffRepo.deleteById(id);
+			if(staffRepo.count()==1) {
+				throw new NotFoundException("Cannot delete last record");
+			}
+			else {
+				staffRepo.deleteById(id);
+			}
 		}
 		else {
 			throw new NotFoundException("Staff with id: "+id+" not found!");

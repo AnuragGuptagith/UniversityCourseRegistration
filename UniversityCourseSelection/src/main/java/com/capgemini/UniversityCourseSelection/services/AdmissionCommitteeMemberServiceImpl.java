@@ -62,7 +62,11 @@ public class AdmissionCommitteeMemberServiceImpl implements IAdmissionCommiteeMe
 	@Transactional
 	public void removeCommitteeMember(int id) {
 		if (repo.existsById(id)) {
-			repo.deleteById(id);
+			if (repo.count() == 1) {
+				throw new NotFoundException("Cannot delete last record");
+			} else {
+				repo.deleteById(id);
+			}
 		} else {
 			throw new NotFoundException("No member exists with id:" + id);
 		}

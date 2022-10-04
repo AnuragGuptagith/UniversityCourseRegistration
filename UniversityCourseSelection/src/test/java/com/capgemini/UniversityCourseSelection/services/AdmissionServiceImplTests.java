@@ -18,6 +18,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.capgemini.UniversityCourseSelection.entities.Admission;
+import com.capgemini.UniversityCourseSelection.entities.Course;
 import com.capgemini.UniversityCourseSelection.exception.NotFoundException;
 import com.capgemini.UniversityCourseSelection.repo.IAdmissionRepository;
 import com.capgemini.UniversityCourseSelection.repo.IApplicantRepository;
@@ -48,11 +49,11 @@ class AdmissionServiceImplTests {
 	static void initMethod() {
 	add1.setAdmissionId(1);
 	add1.setApplicantId(2);
-	add1.setCourseId(3);
+	add1.setCourseId(1);
 	add1.setAdmissionDate(LocalDate.parse("10-Sep-2020",dTF));
 	add2.setAdmissionId(4);
 	add2.setApplicantId(5);
-	add2.setCourseId(100);
+	add2.setCourseId(1);
 	add2.setAdmissionDate(LocalDate.parse("10-Sep-2020",dTF));
 	add3.setAdmissionId(7);
 	add3.setApplicantId(8);
@@ -65,6 +66,9 @@ class AdmissionServiceImplTests {
 		Mockito.when(applicant_repo.existsById(add1.getApplicantId())).thenReturn(true);
 		Mockito.when(course_repo.existsById(add1.getCourseId())).thenReturn(true);
 		Mockito.when(admission_repo.save(add1)).thenReturn(add1);
+		Course course=new Course();
+		course.setCourseId(1);
+	    Mockito.when(course_repo.findById(1)).thenReturn(Optional.ofNullable(course));
 		assertEquals(add1, admission_service.addAdmission(add1));
 	}
 	
@@ -75,6 +79,9 @@ class AdmissionServiceImplTests {
 		Mockito.when(course_repo.existsById(add2.getCourseId())).thenReturn(true);
 		Mockito.when(admission_repo.save(add2)).thenReturn(add2);
 		Mockito.when(admission_repo.existsById(add2.getAdmissionId())).thenReturn(true);
+		Course course=new Course();
+		course.setCourseId(1);
+	    Mockito.when(course_repo.findById(1)).thenReturn(Optional.ofNullable(course));
 		assertEquals(add2, admission_service.updateAdmission(add2));
 	}
 	

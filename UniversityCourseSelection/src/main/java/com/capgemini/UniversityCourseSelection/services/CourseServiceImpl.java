@@ -28,7 +28,8 @@ public class CourseServiceImpl implements ICourseService{
 		Course deletedCourse = null;
 		if(courseRepo.existsById(courseId)) {
 			deletedCourse = courseRepo.findById(courseId).get();
-			courseRepo.deleteById(courseId);
+			deletedCourse.setStatus("INACTIVE");
+			courseRepo.save(deletedCourse);
 			return deletedCourse;
 		}
 		else {

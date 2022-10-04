@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.capgemini.UniversityCourseSelection.entities.Applicant;
+import com.capgemini.UniversityCourseSelection.entities.Course;
 import com.capgemini.UniversityCourseSelection.exception.NotFoundException;
 import com.capgemini.UniversityCourseSelection.repo.IApplicantRepository;
 import com.capgemini.UniversityCourseSelection.repo.ICourseRepository;
@@ -28,6 +29,12 @@ public class ApplicantServiceImpl implements IApplicantService {
 		}
 		if(!courseRepo.existsById(app.getAdmission().getCourseId()))
 			throw new NotFoundException("Course not found");
+		else {
+			Course course=courseRepo.findById(app.getAdmission().getCourseId()).get();
+			if(course.getStatus().equals("INACTIVE")) {
+				throw new NotFoundException("Course is not available");
+			}
+		}
 			
 		Applicant temp=repo.save(app);
 		temp.getAdmission().setApplicantId(temp.getApplicantId());
@@ -43,6 +50,12 @@ public class ApplicantServiceImpl implements IApplicantService {
 		}
 		if(!courseRepo.existsById(app.getAdmission().getCourseId()))
 			throw new NotFoundException("Course not found");
+		else {
+			Course course=courseRepo.findById(app.getAdmission().getCourseId()).get();
+			if(course.getStatus().equals("INACTIVE")) {
+				throw new NotFoundException("Course is not available");
+			}
+		}
 		return repo.save(app);
 	}
 
@@ -64,7 +77,7 @@ public class ApplicantServiceImpl implements IApplicantService {
 
 	@Override
 	public List<Applicant> viewAllApplicantsByStatus(int status) {
-		  return repo.viewAllApplicantByCourse(status);
+		  return repo.viewAllApplicantByStatus(status);
 	}
 
 }

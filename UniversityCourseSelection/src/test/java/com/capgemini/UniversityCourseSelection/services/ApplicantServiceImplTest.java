@@ -8,6 +8,7 @@ import java.util.Optional;
 import com.capgemini.UniversityCourseSelection.entities.Admission;
 import com.capgemini.UniversityCourseSelection.entities.AdmissionStatus;
 import com.capgemini.UniversityCourseSelection.entities.Applicant;
+import com.capgemini.UniversityCourseSelection.entities.Course;
 import com.capgemini.UniversityCourseSelection.exception.NotFoundException;
 import com.capgemini.UniversityCourseSelection.repo.IApplicantRepository;
 import com.capgemini.UniversityCourseSelection.repo.ICourseRepository;
@@ -52,8 +53,11 @@ class ApplicantServiceImplTest {
 
 	@Test
 	void testAddApplicant_success() {
+		Course course= new Course();
+		course.setCourseId(1);
 		Mockito.when(apprepo.save(app1)).thenReturn(app1);
 		Mockito.when(courserepo.existsById(1)).thenReturn(true);
+		Mockito.when(courserepo.findById(1)).thenReturn(Optional.ofNullable(course));
 		app1.getAdmission().setCourseId(1);
 		
 		
@@ -65,9 +69,12 @@ class ApplicantServiceImplTest {
 	void testUpdateApplicant_success() {
 		Mockito.when(apprepo.existsById(2)).thenReturn(true);
 		Mockito.when(courserepo.existsById(1)).thenReturn(true);
+		Course course= new Course();
+		course.setCourseId(1);
 		
 		app2.getAdmission().setCourseId(1);
 		Mockito.when(apprepo.save(app2)).thenReturn(app2);
+		Mockito.when(courserepo.findById(1)).thenReturn(Optional.ofNullable(course));
 		assertEquals(app2, appservice.updateApplicant(app2));
 	}
 
@@ -99,8 +106,8 @@ class ApplicantServiceImplTest {
 		List<Applicant> confirmed = new ArrayList<>();
 		confirmed.add(app3);
 
-		Mockito.when(apprepo.viewAllApplicantByCourse(0)).thenReturn(applied);
-		Mockito.when(apprepo.viewAllApplicantByCourse(1)).thenReturn(confirmed);
+		Mockito.when(apprepo.viewAllApplicantByStatus(0)).thenReturn(applied);
+		Mockito.when(apprepo.viewAllApplicantByStatus(1)).thenReturn(confirmed);
 
 		assertEquals(applied, appservice.viewAllApplicantsByStatus(0));
 		assertEquals(confirmed, appservice.viewAllApplicantsByStatus(1));
@@ -143,7 +150,7 @@ class ApplicantServiceImplTest {
 	@Test
 	void testViewAllApplicantsByStatus_failure() {
 		List<Applicant> list=null;
-		Mockito.when(apprepo.viewAllApplicantByCourse(3)).thenReturn(list);
+		Mockito.when(apprepo.viewAllApplicantByStatus(3)).thenReturn(list);
 		assertEquals(list, appservice.viewAllApplicantsByStatus(3));
 	}
 
