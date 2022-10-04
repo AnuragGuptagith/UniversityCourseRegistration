@@ -11,7 +11,7 @@ import com.capgemini.UniversityCourseSelection.entities.Applicant;
 public interface IApplicantRepository extends JpaRepository<Applicant, Integer> {
 
 	@Query(value = "select * from Applicant where status=?1", nativeQuery = true)
-	List<Applicant> viewAllApplicantByCourse(int status);
+	List<Applicant> viewAllApplicantByStatus(int status);
 
 	@Query(value = "select * from Applicant where id=?1 and password=?2", nativeQuery = true)
 	Applicant verifyApplicantCredentials(int id, String password);

@@ -81,7 +81,7 @@ public class ApplicantController {
 
 	@DeleteMapping("/delete")
 	public ResponseEntity<Applicant> deleteApplication(@RequestBody Applicant applicant, HttpServletRequest request) {
-		boolean valid = checkSession(request, "commitee");
+		boolean valid = checkSession(request, "applicant");
 		String host = String.valueOf(request.getServerPort());
 		
 		if (!valid) {
@@ -92,6 +92,10 @@ public class ApplicantController {
 		}
 		if (applicant == null || applicant.getApplicantId() == null) {
 			throw new NotFoundException("Applicant or Id can't be null!");
+		}
+		HttpSession session=request.getSession();
+		if(applicant.getApplicantId()!=(int)session.getAttribute("applicant")){
+			throw new NotLoggedInException("You can only update your own details");
 		}
 		Applicant temp = service.deleteApplicant(applicant);
 		return new ResponseEntity<>(temp, HttpStatus.OK);
